@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Homepage from "./Homepage";
+import Loading from "./Loading";
 
 const Main = styled.main`
   display: flex;
@@ -12,7 +13,8 @@ const Main = styled.main`
 function App() {
   return (
     <Main>
-      <Homepage />
+      {/* <Homepage /> */}
+      <Loading />
     </Main>
   );
 }

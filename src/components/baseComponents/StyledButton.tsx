@@ -8,18 +8,19 @@ const Button = styled.button`
   border: 0;
   padding: 0.75rem 1.5rem;
   margin: 1rem;
+  cursor: pointer;
 `;
 
 const SmallButton = styled(Button)`
-  font-size: 1rem;
+  font-size: 0.75rem;
 `;
 
 const MediumButton = styled(Button)`
-  font-size: 2rem;
+  font-size: 1rem;
 `;
 
 const LargeButton = styled(Button)`
-  font-size: 4rem;
+  font-size: 1.25rem;
 `;
 
 interface ButtonProps {
