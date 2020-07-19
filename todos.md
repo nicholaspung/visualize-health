@@ -19,3 +19,4 @@
 - [] Recommendations??
 
 - [] Attribute images to https://illlustrations.co/, made by Vijay Verma
+- [] Mobile view

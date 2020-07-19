@@ -3,10 +3,12 @@ import styled from "styled-components";
 import { Sizes } from "./baseComponents/baseComponentsTypes";
 import StyledButton from "./baseComponents/StyledButton";
 import StyledCircle from "./baseComponents/StyledCircle";
+import {
+  WhaleCircle,
+  GymTimeCircle,
+  DumbbellCircle,
+} from "./baseComponents/StyledSvgImages";
 import Positioner from "./baseComponents/Positioner";
-import Whale from "../assets/day51-whale.svg";
-import GymTime from "../assets/103-gym-time.svg";
-import Dumbbell from "../assets/104-dumbbell.svg";
 
 const H1 = styled.h1`
   font-weight: normal;
@@ -21,40 +23,17 @@ const Content = styled.div`
   font-size: 1.25rem;
 `;
 
-const ImageCircle = styled.img`
-  border-radius: 50%;
-  position: relative;
-`;
-
-const WhaleCircle = styled(ImageCircle)`
-  width: 400px;
-  left: 500px;
-  bottom: 200px;
-`;
-
-const GymTimeCircle = styled(ImageCircle)`
-  width: 300px;
-  left: -750px;
-  bottom: -100px;
-`;
-
-const DumbbellCircle = styled(ImageCircle)`
-  width: 400px;
-  left: 750px;
-  bottom: -350px;
-`;
-
 function Homepage() {
   return (
     <>
       <Positioner>
-        <WhaleCircle src={Whale} alt="Whale" />
+        <WhaleCircle />
       </Positioner>
       <Positioner>
-        <GymTimeCircle src={GymTime} alt="Gym clock" />
+        <GymTimeCircle />
       </Positioner>
       <Positioner>
-        <DumbbellCircle src={Dumbbell} alt="Dumbbell" />
+        <DumbbellCircle />
       </Positioner>
       <Positioner>
         <StyledCircle size={Sizes.Small} />
