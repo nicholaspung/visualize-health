@@ -27,13 +27,13 @@ function Homepage() {
   return (
     <>
       <Positioner>
-        <WhaleCircle />
+        <WhaleCircle width={"400px"} left={"500px"} bottom={"200px"} />
       </Positioner>
       <Positioner>
-        <GymTimeCircle />
+        <GymTimeCircle width={"300px"} left={"-750px"} bottom={"-100px"} />
       </Positioner>
       <Positioner>
-        <DumbbellCircle />
+        <DumbbellCircle width={"400px"} left={"750px"} bottom={"-350px"} />
       </Positioner>
       <Positioner>
         <StyledCircle size={Sizes.Small} />

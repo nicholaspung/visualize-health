@@ -9,30 +9,63 @@ const ImageCircle = styled.img`
   position: relative;
 `;
 
-const WhaleCircleComponent = styled(ImageCircle)`
-  width: 400px;
-  left: 500px;
-  bottom: 200px;
-`;
+interface PositionProps {
+  width?: string;
+  left?: string;
+  bottom?: string;
+}
 
-const GymTimeCircleComponent = styled(ImageCircle)`
-  width: 300px;
-  left: -750px;
-  bottom: -100px;
-`;
+interface StyledImageProps {
+  src: string;
+  alt: string;
+  width?: string;
+  left?: string;
+  bottom?: string;
+}
 
-const DumbbellCircleComponent = styled(ImageCircle)`
-  width: 400px;
-  left: 750px;
-  bottom: -350px;
-`;
+export const StyledImageCircle = (props: StyledImageProps) => {
+  const StyledImageComponent = styled(ImageCircle)<PositionProps>`
+    width: ${(props) => (props.width ? props.width : "")};
+    left: ${(props) => (props.left ? props.left : "")};
+    bottom: ${(props) => (props.bottom ? props.bottom : "")};
+  `;
 
-export const WhaleCircle = () => (
-  <WhaleCircleComponent src={Whale} alt="Whale" />
+  return (
+    <StyledImageComponent
+      src={props.src}
+      alt={props.alt}
+      width={props.width}
+      left={props.left}
+      bottom={props.bottom}
+    />
+  );
+};
+
+export const WhaleCircle = (props: PositionProps) => (
+  <StyledImageCircle
+    src={Whale}
+    alt="Whale"
+    width={props.width}
+    left={props.left}
+    bottom={props.bottom}
+  />
 );
-export const GymTimeCircle = () => (
-  <GymTimeCircleComponent src={GymTime} alt="Gym clock" />
+
+export const GymTimeCircle = (props: PositionProps) => (
+  <StyledImageCircle
+    src={GymTime}
+    alt="Gym clock"
+    width={props.width}
+    left={props.left}
+    bottom={props.bottom}
+  />
 );
-export const DumbbellCircle = () => (
-  <DumbbellCircleComponent src={Dumbbell} alt="Dumbbell" />
+export const DumbbellCircle = (props: PositionProps) => (
+  <StyledImageCircle
+    src={Dumbbell}
+    alt="Dumbbell"
+    width={props.width}
+    left={props.left}
+    bottom={props.bottom}
+  />
 );
