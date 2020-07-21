@@ -9,6 +9,8 @@ import {
   DumbbellCircle,
 } from "./baseComponents/StyledSvgImages";
 import Positioner from "./baseComponents/Positioner";
+import useDisplayHook, { ShowChoices } from "./useDisplayHook";
+import { blue } from "./baseComponents/colors";
 
 const H1 = styled.h1`
   font-weight: normal;
@@ -23,7 +25,13 @@ const Content = styled.div`
   font-size: 1.25rem;
 `;
 
-function Homepage() {
+const Span = styled.span`
+  color: ${blue};
+  cursor: pointer;
+`;
+
+const Homepage = () => {
+  const [_, setShow] = useDisplayHook();
   return (
     <>
       <Positioner>
@@ -50,8 +58,8 @@ function Homepage() {
           Thank you for using Visualize Health!
           <br />
           <br />
-          If this is your first time, click here for a tutorial on how to use
-          this application.
+          If this is your first time, click <Span>here</Span> for a tutorial on
+          how to use this application.
           <br />
           <br />
           Otherwise, do your thing!
@@ -60,6 +68,6 @@ function Homepage() {
       <StyledButton content={"Import FitNotes CSV File"} size={Sizes.Large} />
     </>
   );
-}
+};
 
 export default Homepage;

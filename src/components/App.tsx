@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Homepage from "./Homepage";
 import Loading from "./Loading";
 import Dashboard from "./Dashboard";
+import useDisplayHook, { ShowChoices } from "./useDisplayHook";
 
 const Main = styled.main`
   display: flex;
@@ -13,14 +14,15 @@ const Main = styled.main`
   height: 100%;
 `;
 
-function App() {
+const App = () => {
+  const [show] = useDisplayHook();
   return (
     <Main>
-      <Homepage />
-      {/* <Loading /> */}
-      {/* <Dashboard /> */}
+      {show === ShowChoices.Homepage && <Homepage />}
+      {show === ShowChoices.Loading && <Loading />}
+      {show === ShowChoices.Dashboard && <Dashboard />}
     </Main>
   );
-}
+};
 
 export default App;

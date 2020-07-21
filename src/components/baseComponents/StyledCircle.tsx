@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Sizes } from "./baseComponentsTypes";
+import { yellow, purple, red, green, blue } from "./colors";
 
 type DivProps = {
   color: string;
@@ -53,19 +54,19 @@ const StyledCircle = (props: CircleProps) => {
   );
   switch (random) {
     case 1:
-      color = `#FD0707`;
+      color = red;
       break;
     case 2:
-      color = `#FFE43E`;
+      color = yellow;
       break;
     case 3:
-      color = `#333379`;
+      color = purple;
       break;
     case 4:
-      color = `#2b9cf2`;
+      color = blue;
       break;
     default:
-      color = `#0DF625`;
+      color = green;
   }
 
   let height: string;
