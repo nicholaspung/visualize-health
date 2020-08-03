@@ -23,23 +23,21 @@ interface StyledImageProps {
   bottom?: string;
 }
 
-export const StyledImageCircle = (props: StyledImageProps) => {
-  const StyledImageComponent = styled(ImageCircle)<PositionProps>`
-    width: ${(props) => (props.width ? props.width : "")};
-    left: ${(props) => (props.left ? props.left : "")};
-    bottom: ${(props) => (props.bottom ? props.bottom : "")};
-  `;
+const StyledImageComponent = styled(ImageCircle)<PositionProps>`
+  width: ${(props) => (props.width ? props.width : "")};
+  left: ${(props) => (props.left ? props.left : "")};
+  bottom: ${(props) => (props.bottom ? props.bottom : "")};
+`;
 
-  return (
-    <StyledImageComponent
-      src={props.src}
-      alt={props.alt}
-      width={props.width}
-      left={props.left}
-      bottom={props.bottom}
-    />
-  );
-};
+export const StyledImageCircle = (props: StyledImageProps) => (
+  <StyledImageComponent
+    src={props.src}
+    alt={props.alt}
+    width={props.width}
+    left={props.left}
+    bottom={props.bottom}
+  />
+);
 
 export const WhaleCircle = (props: PositionProps) => (
   <StyledImageCircle

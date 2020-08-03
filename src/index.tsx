@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./components/App";
 import "./index.css";
+import { DisplayProvider } from "./components/context/displayContext";
 // import * as serviceWorker from './serviceWorker';
 import WebFont from "webfontloader";
 
@@ -14,7 +15,9 @@ WebFont.load({
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <DisplayProvider>
+      <App />
+    </DisplayProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

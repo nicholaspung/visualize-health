@@ -26,6 +26,7 @@ const LargeButton = styled(Button)`
 interface ButtonProps {
   content: string;
   size: Sizes;
+  onClick: (): void;
 }
 
 const StyledButton = (props: ButtonProps) => {
@@ -40,7 +41,11 @@ const StyledButton = (props: ButtonProps) => {
     default:
       Component = SmallButton;
   }
-  return <Component type="button">{props.content}</Component>;
+  return (
+    <Component type="button" onClick={props.onClick}>
+      {props.content}
+    </Component>
+  );
 };
 
 export default StyledButton;

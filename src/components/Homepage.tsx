@@ -9,8 +9,8 @@ import {
   DumbbellCircle,
 } from "./baseComponents/StyledSvgImages";
 import Positioner from "./baseComponents/Positioner";
-import useDisplayHook, { ShowChoices } from "./useDisplayHook";
 import { blue } from "./baseComponents/colors";
+import { useDisplay, ShowChoices } from "./context/displayContext";
 
 const H1 = styled.h1`
   font-weight: normal;
@@ -31,7 +31,8 @@ const Span = styled.span`
 `;
 
 const Homepage = () => {
-  const [_, setShow] = useDisplayHook();
+  const { setDisplay } = useDisplay()!;
+
   return (
     <>
       <Positioner>
@@ -58,8 +59,11 @@ const Homepage = () => {
           Thank you for using Visualize Health!
           <br />
           <br />
-          If this is your first time, click <Span>here</Span> for a tutorial on
-          how to use this application.
+          If this is your first time, click{" "}
+          <Span onClick={() => setDisplay(ShowChoices.Dashboard)}>
+            here
+          </Span>{" "}
+          for a tutorial on how to use this application.
           <br />
           <br />
           Otherwise, do your thing!
