@@ -7,7 +7,7 @@ const Button = styled.button`
   border-radius: 50px;
   border: 0;
   padding: 0.75rem 1.5rem;
-  margin: 1rem;
+  margin: 0.5rem;
   cursor: pointer;
 `;
 
@@ -26,7 +26,7 @@ const LargeButton = styled(Button)`
 interface ButtonProps {
   content: string;
   size: Sizes;
-  onClick: (): void;
+  onClick?: () => void;
 }
 
 const StyledButton = (props: ButtonProps) => {

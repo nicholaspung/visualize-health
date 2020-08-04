@@ -3,6 +3,7 @@ import styled from "styled-components";
 import StyledButton from "./baseComponents/StyledButton";
 import { Sizes } from "./baseComponents/baseComponentsTypes";
 import { WhaleCircle } from "./baseComponents/StyledSvgImages";
+import { useDisplay, ShowChoices } from "./context/displayContext";
 
 const H1 = styled.h1`
   font-weight: normal;
@@ -21,14 +22,22 @@ const Header = styled.header`
   justify-content: space-between;
   width: 95%;
   align-items: center;
-  margin-right: 1rem;
+  margin: 1rem 1rem 0 0;
 `;
 
 const LogoContainer = styled.div`
   text-align: center;
 `;
 
+const WhaleContainer = styled.button`
+  border: 0;
+  background: white;
+  cursor: pointer;
+`;
+
 const DashboardHeader = () => {
+  const { setDisplay } = useDisplay()!;
+
   return (
     <Header>
       <DataContainer>
@@ -42,7 +51,12 @@ const DashboardHeader = () => {
         <H1>Visualize Health</H1>
         <StyledButton content="Click if you need help!" size={Sizes.Small} />
       </LogoContainer>
-      <WhaleCircle width={"155px"} />
+      <WhaleContainer
+        type="button"
+        onClick={() => setDisplay(ShowChoices.Homepage)}
+      >
+        <WhaleCircle width={"140px"} />
+      </WhaleContainer>
     </Header>
   );
 };

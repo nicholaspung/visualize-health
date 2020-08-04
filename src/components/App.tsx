@@ -9,7 +9,7 @@ const Main = styled.main`
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-flow: column wrap;
+  flex-flow: column nowrap;
   width: 100%;
   height: 100%;
 `;

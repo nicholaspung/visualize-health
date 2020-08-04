@@ -32,17 +32,18 @@ const Span = styled.span`
 
 const Homepage = () => {
   const { setDisplay } = useDisplay()!;
+  const fileEl = React.useRef(null);
 
   return (
     <>
       <Positioner>
-        <WhaleCircle width={"400px"} left={"500px"} bottom={"200px"} />
+        <DumbbellCircle width={"400px"} left={"550px"} bottom={"-250px"} />
       </Positioner>
       <Positioner>
-        <GymTimeCircle width={"300px"} left={"-750px"} bottom={"-100px"} />
+        <WhaleCircle width={"400px"} left={"500px"} bottom={"125px"} />
       </Positioner>
       <Positioner>
-        <DumbbellCircle width={"400px"} left={"750px"} bottom={"-350px"} />
+        <GymTimeCircle width={"300px"} left={"-550px"} bottom={"-100px"} />
       </Positioner>
       <Positioner>
         <StyledCircle size={Sizes.Small} />
@@ -69,7 +70,12 @@ const Homepage = () => {
           Otherwise, do your thing!
         </p>
       </Content>
-      <StyledButton content={"Import FitNotes CSV File"} size={Sizes.Large} />
+      <input type="file" accept=".csv" ref={fileEl} />
+      <StyledButton
+        content={"Import FitNotes CSV File"}
+        size={Sizes.Large}
+        onClick={() => console.log("hello")}
+      />
     </>
   );
 };

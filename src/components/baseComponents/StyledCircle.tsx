@@ -89,8 +89,8 @@ const StyledCircle = (props: CircleProps) => {
     default:
       height = `200px`;
       width = `200px`;
-      left = `350px`;
-      bottom = `-300px`;
+      left = `275px`;
+      bottom = `-225px`;
   }
 
   if (props.randomPosition) {
