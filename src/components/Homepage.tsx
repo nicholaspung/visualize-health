@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Papa from "papaparse";
 import { Sizes } from "./baseComponents/baseComponentsTypes";
 import StyledButton from "./baseComponents/StyledButton";
 import StyledCircle from "./baseComponents/StyledCircle";
@@ -32,7 +33,7 @@ const Span = styled.span`
 
 const Homepage = () => {
   const { setDisplay } = useDisplay()!;
-  const fileEl = React.useRef(null);
+  const fileEl = React.useRef<HTMLInputElement>(null);
 
   return (
     <>
@@ -74,7 +75,18 @@ const Homepage = () => {
       <StyledButton
         content={"Import FitNotes CSV File"}
         size={Sizes.Large}
-        onClick={() => console.log("hello")}
+        onClick={() => {
+          if (fileEl.current == null) return;
+          const inputEl = fileEl.current;
+          const files = inputEl.files;
+          if (files!.length === 0) return;
+          Papa.parse(files![0], {
+            header: true,
+            complete: (res) => console.log(res),
+            error: (err) => console.log(err),
+          });
+          console.log(files![0]);
+        }}
       />
     </>
   );

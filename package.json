@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^7.2.1",
     "@types/jest": "^24.9.1",
     "@types/node": "^12.12.50",
+    "@types/papaparse": "^5.0.6",
     "@types/react": "^16.9.43",
     "@types/react-dom": "^16.9.8",
     "papaparse": "^5.2.0",
