@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import App from "./components/App";
 import "./index.css";
 import { DisplayProvider } from "./components/context/displayContext";
+import { DataProvider } from "./components/context/displayData";
 // import * as serviceWorker from './serviceWorker';
 import WebFont from "webfontloader";
 
@@ -15,9 +16,11 @@ WebFont.load({
 
 ReactDOM.render(
   <React.StrictMode>
-    <DisplayProvider>
-      <App />
-    </DisplayProvider>
+    <DataProvider>
+      <DisplayProvider>
+        <App />
+      </DisplayProvider>
+    </DataProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

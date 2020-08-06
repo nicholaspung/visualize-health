@@ -3,6 +3,7 @@ import styled from "styled-components";
 import StyledCircle from "./baseComponents/StyledCircle";
 import { Sizes } from "./baseComponents/baseComponentsTypes";
 import Positioner from "./baseComponents/Positioner";
+import { useDisplay, ShowChoices } from "./context/displayContext";
 
 const H1 = styled.h1`
   position: relative;
@@ -22,6 +23,14 @@ const H2 = styled.h2`
 `;
 
 const Loading = () => {
+  const { setDisplay } = useDisplay()!;
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      setDisplay(ShowChoices.Dashboard);
+    }, 5000);
+  }, [setDisplay]);
+
   return (
     <div>
       <H1>Loading your data, please wait...</H1>
@@ -29,11 +38,12 @@ const Loading = () => {
       <Positioner>
         {Array(10)
           .fill(0)
-          .map((_) => (
+          .map((_, idx) => (
             <StyledCircle
               size={Sizes.Small}
               randomPosition={true}
               animate={true}
+              key={`a${idx}`}
             />
           ))}
       </Positioner>

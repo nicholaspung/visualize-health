@@ -12,6 +12,7 @@ import {
 import Positioner from "./baseComponents/Positioner";
 import { blue } from "./baseComponents/colors";
 import { useDisplay, ShowChoices } from "./context/displayContext";
+import { useData } from "./context/displayData";
 
 const H1 = styled.h1`
   font-weight: normal;
@@ -33,6 +34,7 @@ const Span = styled.span`
 
 const Homepage = () => {
   const { setDisplay } = useDisplay()!;
+  const { setData } = useData();
   const fileEl = React.useRef<HTMLInputElement>(null);
 
   return (
@@ -77,15 +79,21 @@ const Homepage = () => {
         size={Sizes.Large}
         onClick={() => {
           if (fileEl.current == null) return;
+
           const inputEl = fileEl.current;
           const files = inputEl.files;
+
           if (files!.length === 0) return;
+
+          setDisplay(ShowChoices.Loading);
           Papa.parse(files![0], {
             header: true,
-            complete: (res) => console.log(res),
+            complete: (res) => {
+              console.log(res);
+              setData(files![0]);
+            },
             error: (err) => console.log(err),
           });
-          console.log(files![0]);
         }}
       />
     </>
