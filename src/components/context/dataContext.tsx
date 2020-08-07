@@ -1,8 +1,8 @@
 import React, { Dispatch, SetStateAction } from "react";
 
 type DataContextType = {
-  data: File;
-  setData: Dispatch<SetStateAction<File>>;
+  data: any;
+  setData: Dispatch<SetStateAction<any>>;
 };
 
 const DataContext = React.createContext<DataContextType | undefined>(undefined);
@@ -12,7 +12,7 @@ type Props = {
 };
 
 export const DataProvider = ({ children }: Props) => {
-  const [data, setData] = React.useState();
+  const [data, setData] = React.useState(undefined);
 
   return (
     <DataContext.Provider value={{ data, setData }}>

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import DashboardHeader from "./DashboardHeader";
 import DashboardCategories from "./DashboardCategories";
 import { purple } from "./baseComponents/colors";
+import { useData } from "./context/dataContext";
 
 const Content = styled.div`
   box-sizing: border-box;
@@ -23,6 +24,9 @@ const DataContainer = styled.div`
 `;
 
 const Dashboard = () => {
+  const { data } = useData()!;
+
+  console.log(data);
   return (
     <>
       <DashboardHeader />

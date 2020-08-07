@@ -4,6 +4,7 @@ import StyledButton from "./baseComponents/StyledButton";
 import { Sizes } from "./baseComponents/baseComponentsTypes";
 import { WhaleCircle } from "./baseComponents/StyledSvgImages";
 import { useDisplay, ShowChoices } from "./context/displayContext";
+import { useData } from "./context/dataContext";
 
 const H1 = styled.h1`
   font-weight: normal;
@@ -37,6 +38,7 @@ const WhaleContainer = styled.button`
 
 const DashboardHeader = () => {
   const { setDisplay } = useDisplay()!;
+  const { setData } = useData()!;
 
   return (
     <Header>
@@ -45,7 +47,14 @@ const DashboardHeader = () => {
           content="Import New FitNotes CSV File"
           size={Sizes.Small}
         />
-        <StyledButton content="Clear Data" size={Sizes.Small} />
+        <StyledButton
+          content="Clear Data"
+          size={Sizes.Small}
+          onClick={() => {
+            setData(undefined);
+            setDisplay(ShowChoices.Homepage);
+          }}
+        />
       </DataContainer>
       <LogoContainer>
         <H1>Visualize Health</H1>

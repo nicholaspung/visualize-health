@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import Papa from "papaparse";
 import { Sizes } from "./baseComponents/baseComponentsTypes";
 import StyledButton from "./baseComponents/StyledButton";
 import StyledCircle from "./baseComponents/StyledCircle";
@@ -12,7 +11,8 @@ import {
 import Positioner from "./baseComponents/Positioner";
 import { blue } from "./baseComponents/colors";
 import { useDisplay, ShowChoices } from "./context/displayContext";
-import { useData } from "./context/displayData";
+import ImportCSV from "./ImportCSV";
+import { useData } from "./context/dataContext";
 
 const H1 = styled.h1`
   font-weight: normal;
@@ -34,8 +34,7 @@ const Span = styled.span`
 
 const Homepage = () => {
   const { setDisplay } = useDisplay()!;
-  const { setData } = useData();
-  const fileEl = React.useRef<HTMLInputElement>(null);
+  const { data } = useData()!;
 
   return (
     <>
@@ -73,29 +72,15 @@ const Homepage = () => {
           Otherwise, do your thing!
         </p>
       </Content>
-      <input type="file" accept=".csv" ref={fileEl} />
-      <StyledButton
-        content={"Import FitNotes CSV File"}
-        size={Sizes.Large}
-        onClick={() => {
-          if (fileEl.current == null) return;
-
-          const inputEl = fileEl.current;
-          const files = inputEl.files;
-
-          if (files!.length === 0) return;
-
-          setDisplay(ShowChoices.Loading);
-          Papa.parse(files![0], {
-            header: true,
-            complete: (res) => {
-              console.log(res);
-              setData(files![0]);
-            },
-            error: (err) => console.log(err),
-          });
-        }}
-      />
+      {data ? (
+        <StyledButton
+          content={"Proceed To Data"}
+          size={Sizes.Large}
+          onClick={() => setDisplay(ShowChoices.Dashboard)}
+        />
+      ) : (
+        <ImportCSV />
+      )}
     </>
   );
 };

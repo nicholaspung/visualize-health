@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useDataOption, DataOptions } from "./context/dataOptionContext";
 
 const CategoryContainer = styled.div`
   flex: 1 0 20%;
@@ -17,9 +18,14 @@ const CategoryTitlesContainer = styled.ul`
   list-style: none;
 `;
 
-const CategoryTitles = styled.li`
+type LiProps = {
+  active?: boolean;
+};
+
+const CategoryTitles = styled.li<LiProps>`
   text-align: center;
   border-bottom: 1px solid black;
+  background: ${(props) => (props.active ? "lightgrey" : "")};
 `;
 
 const H3 = styled.h3`
@@ -37,7 +43,7 @@ const Recommendations = styled.h3`
   text-align: center;
 `;
 
-const NonexistentButton = styled.button`
+const NonexistentButton = styled.button<LiProps>`
   background: white;
   border: 0;
   margin: 0;
@@ -45,30 +51,39 @@ const NonexistentButton = styled.button`
   border-radius: 30px;
   width: 100%;
   cursor: pointer;
+  background: ${(props) => (props.active ? "lightgrey" : "")};
 `;
 
 const categories = [
-  "Raw Data",
-  "Bodyweight Trends",
-  "Workout Distribution",
-  "Breakdown",
-  "Records",
+  { label: "Raw Data", value: DataOptions.RawData },
+  { label: "Bodyweight Trends", value: DataOptions.BodyweightTrends },
+  { label: "Workout Distribution", value: DataOptions.WorkoutDistribution },
+  { label: "Breakdown", value: DataOptions.Breakdown },
+  { label: "Records", value: DataOptions.Records },
 ];
 
 const DashboardCategories = () => {
+  const { setOption, option } = useDataOption()!;
+
   return (
     <CategoryContainer>
       <CategoryTitlesContainer>
         {categories.map((category) => (
-          <CategoryTitles key={category}>
-            <NonexistentButton>
-              <H3>{category}</H3>
+          <CategoryTitles
+            key={category.value}
+            active={category.value === option}
+          >
+            <NonexistentButton onClick={() => setOption(category.value)}>
+              <H3>{category.label}</H3>
             </NonexistentButton>
           </CategoryTitles>
         ))}
       </CategoryTitlesContainer>
-      <NonexistentButton>
-        <Recommendations>Recommendations</Recommendations>
+      <NonexistentButton
+        active={option === DataOptions.Recommendations}
+        onClick={() => setOption(DataOptions.Recommendations)}
+      >
+        <Recommendations>{DataOptions.Recommendations}</Recommendations>
       </NonexistentButton>
     </CategoryContainer>
   );
