@@ -18,14 +18,9 @@ const CategoryTitlesContainer = styled.ul`
   list-style: none;
 `;
 
-type LiProps = {
-  active?: boolean;
-};
-
-const CategoryTitles = styled.li<LiProps>`
+const CategoryTitles = styled.li`
   text-align: center;
   border-bottom: 1px solid black;
-  background: ${(props) => (props.active ? "lightgrey" : "")};
 `;
 
 const H3 = styled.h3`
@@ -43,7 +38,11 @@ const Recommendations = styled.h3`
   text-align: center;
 `;
 
-const NonexistentButton = styled.button<LiProps>`
+type ButtonProps = {
+  active?: boolean;
+};
+
+const NonexistentButton = styled.button<ButtonProps>`
   background: white;
   border: 0;
   margin: 0;
@@ -51,7 +50,8 @@ const NonexistentButton = styled.button<LiProps>`
   border-radius: 30px;
   width: 100%;
   cursor: pointer;
-  background: ${(props) => (props.active ? "lightgrey" : "")};
+  ${(props) =>
+    props.active ? "font-weight: bold; text-decoration: underline;" : ""}
 `;
 
 const categories = [
@@ -62,6 +62,11 @@ const categories = [
   { label: "Records", value: DataOptions.Records },
 ];
 
+const endCategory = {
+  label: "Recommendations",
+  value: DataOptions.Recommendations,
+};
+
 const DashboardCategories = () => {
   const { setOption, option } = useDataOption()!;
 
@@ -69,21 +74,21 @@ const DashboardCategories = () => {
     <CategoryContainer>
       <CategoryTitlesContainer>
         {categories.map((category) => (
-          <CategoryTitles
-            key={category.value}
-            active={category.value === option}
-          >
-            <NonexistentButton onClick={() => setOption(category.value)}>
+          <CategoryTitles key={category.value}>
+            <NonexistentButton
+              onClick={() => setOption(category.value)}
+              active={option === category.value}
+            >
               <H3>{category.label}</H3>
             </NonexistentButton>
           </CategoryTitles>
         ))}
       </CategoryTitlesContainer>
       <NonexistentButton
-        active={option === DataOptions.Recommendations}
-        onClick={() => setOption(DataOptions.Recommendations)}
+        active={option === endCategory.value}
+        onClick={() => setOption(endCategory.value)}
       >
-        <Recommendations>{DataOptions.Recommendations}</Recommendations>
+        <Recommendations>{endCategory.label}</Recommendations>
       </NonexistentButton>
     </CategoryContainer>
   );

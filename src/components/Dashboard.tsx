@@ -4,6 +4,7 @@ import DashboardHeader from "./DashboardHeader";
 import DashboardCategories from "./DashboardCategories";
 import { purple } from "./baseComponents/colors";
 import { useData } from "./context/dataContext";
+import DataContainer from "./DataContainer";
 
 const Content = styled.div`
   box-sizing: border-box;
@@ -16,13 +17,6 @@ const Content = styled.div`
   display: flex;
 `;
 
-const DataContainer = styled.div`
-  flex: 1 0 65%;
-  border-radius: 30px;
-  background: white;
-  padding: 2rem;
-`;
-
 const Dashboard = () => {
   const { data } = useData()!;
 
@@ -32,7 +26,7 @@ const Dashboard = () => {
       <DashboardHeader />
       <Content>
         <DashboardCategories />
-        <DataContainer>Graphs</DataContainer>
+        <DataContainer />
       </Content>
     </>
   );

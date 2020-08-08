@@ -7,10 +7,8 @@ import { useData } from "./context/dataContext";
 
 const ImportCSV = () => {
   const { setDisplay } = useDisplay()!;
-  const { setData, data } = useData()!;
+  const { setData } = useData()!;
   const fileEl = React.useRef<HTMLInputElement>(null);
-
-  console.log(data);
 
   return (
     <>
