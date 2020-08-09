@@ -1,20 +1,22 @@
-import React from "react";
+import React, { Dispatch } from "react";
 import Papa from "papaparse";
 import { Sizes } from "./baseComponents/baseComponentsTypes";
 import StyledButton from "./baseComponents/StyledButton";
-import { useDisplay, ShowChoices } from "./context/displayContext";
-import { useData } from "./context/dataContext";
 
-const ImportCSV = () => {
-  const { setDisplay } = useDisplay()!;
-  const { setData } = useData()!;
+type ImportCSVProps = {
+  content: string;
+  setContext: Dispatch<any>;
+  callback: () => void;
+};
+
+const ImportCSV = (props: ImportCSVProps) => {
   const fileEl = React.useRef<HTMLInputElement>(null);
 
   return (
     <>
       <input type="file" accept=".csv" ref={fileEl} />
       <StyledButton
-        content={"Import FitNotes CSV File"}
+        content={props.content}
         size={Sizes.Large}
         onClick={() => {
           if (fileEl.current == null) return;
@@ -24,11 +26,11 @@ const ImportCSV = () => {
 
           if (files!.length === 0) return;
 
-          setDisplay(ShowChoices.Loading);
+          props.callback();
           Papa.parse(files![0], {
-            header: true,
-            complete: (res) => setData(res),
-            error: (err) => setData(err),
+            header: false,
+            complete: (res) => props.setContext(res),
+            error: (err) => props.setContext(err),
           });
         }}
       />

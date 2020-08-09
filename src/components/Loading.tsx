@@ -4,6 +4,7 @@ import StyledCircle from "./baseComponents/StyledCircle";
 import { Sizes } from "./baseComponents/baseComponentsTypes";
 import Positioner from "./baseComponents/Positioner";
 import { useDisplay, ShowChoices } from "./context/displayContext";
+import { useData } from "./context/dataContext";
 
 const H1 = styled.h1`
   position: relative;
@@ -24,12 +25,15 @@ const H2 = styled.h2`
 
 const Loading = () => {
   const { setDisplay } = useDisplay()!;
+  const { data } = useData()!;
 
   React.useEffect(() => {
-    setTimeout(() => {
-      setDisplay(ShowChoices.Dashboard);
-    }, 5000);
-  }, [setDisplay]);
+    if (data) {
+      setTimeout(() => {
+        setDisplay(ShowChoices.Dashboard);
+      }, 2000);
+    }
+  }, [setDisplay, data]);
 
   return (
     <div>

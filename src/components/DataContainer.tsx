@@ -9,12 +9,11 @@ const Container = styled.div`
   border-radius: 30px;
   background: white;
   padding: 2rem;
+  overflow-y: scroll;
 `;
 
 const displayVisualization = (option: DataOptions, data: any) => {
   switch (option) {
-    case DataOptions.RawData:
-      return <RawDataDisplay data={data} />;
     case DataOptions.BodyweightTrends:
       return <div>Bodyweight Trends</div>;
     case DataOptions.Breakdown:
@@ -32,9 +31,12 @@ const DataContainer = () => {
   const { data } = useData()!;
   const { option } = useDataOption()!;
 
-  console.log(data);
-
-  return <Container>{displayVisualization(option, data)}</Container>;
+  return (
+    <Container>
+      {<RawDataDisplay data={data} />}
+      {displayVisualization(option, data)}
+    </Container>
+  );
 };
 
 export default DataContainer;

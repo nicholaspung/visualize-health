@@ -34,7 +34,7 @@ const Span = styled.span`
 
 const Homepage = () => {
   const { setDisplay } = useDisplay()!;
-  const { data } = useData()!;
+  const { data, setData } = useData()!;
 
   return (
     <>
@@ -79,7 +79,11 @@ const Homepage = () => {
           onClick={() => setDisplay(ShowChoices.Dashboard)}
         />
       ) : (
-        <ImportCSV />
+        <ImportCSV
+          content={"Import FitNotes Exercise CSV"}
+          callback={() => setDisplay(ShowChoices.Loading)}
+          setContext={setData}
+        />
       )}
     </>
   );
