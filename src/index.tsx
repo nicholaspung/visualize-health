@@ -5,6 +5,7 @@ import "./index.css";
 import { DisplayProvider } from "./components/context/displayContext";
 import { DataProvider } from "./components/context/dataContext";
 import { DataOptionProvider } from "./components/context/dataOptionContext";
+import { BodyweightDataProvider } from "./components/context/bodyweightDataContext";
 // import * as serviceWorker from './serviceWorker';
 import WebFont from "webfontloader";
 
@@ -17,13 +18,15 @@ WebFont.load({
 
 ReactDOM.render(
   <React.StrictMode>
-    <DataProvider>
-      <DataOptionProvider>
-        <DisplayProvider>
-          <App />
-        </DisplayProvider>
-      </DataOptionProvider>
-    </DataProvider>
+    <BodyweightDataProvider>
+      <DataProvider>
+        <DataOptionProvider>
+          <DisplayProvider>
+            <App />
+          </DisplayProvider>
+        </DataOptionProvider>
+      </DataProvider>
+    </BodyweightDataProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

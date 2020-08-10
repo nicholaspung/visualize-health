@@ -1,37 +1,92 @@
-import React, { Dispatch } from "react";
+import React from "react";
 import Papa from "papaparse";
+import styled from "styled-components";
 import { Sizes } from "./baseComponents/baseComponentsTypes";
 import StyledButton from "./baseComponents/StyledButton";
+import { useDisplay, ShowChoices } from "./context/displayContext";
+import { useData } from "./context/dataContext";
+import { useBodyweightData } from "./context/bodyweightDataContext";
 
-type ImportCSVProps = {
-  content: string;
-  setContext: Dispatch<any>;
-  callback: () => void;
+type DivProps = {
+  active?: boolean;
 };
 
-const ImportCSV = (props: ImportCSVProps) => {
-  const fileEl = React.useRef<HTMLInputElement>(null);
+const InputContainer = styled.div<DivProps>`
+  display: flex;
+  flex-flow: column wrap;
+  padding: 0.5rem;
+  width: 20rem;
+  background: ${(props) => (props.active ? "lightgrey" : "white")};
+  border-radius: 5px;
+`;
+
+const RequiredText = styled.span`
+  color: red;
+`;
+
+const ImportCSV = () => {
+  const fileExercisesEl = React.useRef<HTMLInputElement>(null);
+  const fileBodyweightEl = React.useRef<HTMLInputElement>(null);
+  const [missing, setMissing] = React.useState(false);
+
+  const { setDisplay } = useDisplay()!;
+  const { setData } = useData()!;
+  const { setBodyweightData } = useBodyweightData()!;
 
   return (
     <>
-      <input type="file" accept=".csv" ref={fileEl} />
+      <InputContainer active={missing}>
+        <label htmlFor="exercises">
+          Import FitNotes Exercises CSV <RequiredText>(Required)</RequiredText>
+        </label>
+        <input
+          name="exercises"
+          type="file"
+          accept=".csv"
+          ref={fileExercisesEl}
+        />
+      </InputContainer>
+      <InputContainer>
+        <label htmlFor="bodyweight">Import FitNotes Body Tracker CSV</label>
+        <input
+          name="bodyweight"
+          type="file"
+          accept=".csv"
+          ref={fileBodyweightEl}
+        />
+      </InputContainer>
       <StyledButton
-        content={props.content}
+        content={"Import"}
         size={Sizes.Large}
         onClick={() => {
-          if (fileEl.current == null) return;
+          if (fileExercisesEl.current == null) return;
 
-          const inputEl = fileEl.current;
-          const files = inputEl.files;
+          const exercisesEl = fileExercisesEl.current;
+          const exercisesFiles = exercisesEl.files;
 
-          if (files!.length === 0) return;
+          if (exercisesFiles!.length === 0) {
+            setMissing(true);
+            return;
+          }
 
-          props.callback();
-          Papa.parse(files![0], {
+          const bodyweightEl = fileBodyweightEl.current;
+          const bodyweightFiles = bodyweightEl?.files;
+
+          if (bodyweightFiles!.length > 0) {
+            Papa.parse(bodyweightFiles![0], {
+              header: false,
+              complete: (res) => setBodyweightData(res),
+              error: (err) => setBodyweightData(err),
+            });
+          }
+
+          Papa.parse(exercisesFiles![0], {
             header: false,
-            complete: (res) => props.setContext(res),
-            error: (err) => props.setContext(err),
+            complete: (res) => setData(res),
+            error: (err) => setData(err),
           });
+
+          setDisplay(ShowChoices.Loading);
         }}
       />
     </>

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useData } from "./context/dataContext";
 import { useDataOption, DataOptions } from "./context/dataOptionContext";
 import RawDataDisplay from "./RawDataDisplay";
+import BodyweightTrends from "./BodyweightTrends";
 
 const Container = styled.div`
   flex: 1 0 65%;
@@ -14,8 +15,10 @@ const Container = styled.div`
 
 const displayVisualization = (option: DataOptions, data: any) => {
   switch (option) {
+    case DataOptions.RawData:
+      return <RawDataDisplay data={data} />;
     case DataOptions.BodyweightTrends:
-      return <div>Bodyweight Trends</div>;
+      return <BodyweightTrends />;
     case DataOptions.Breakdown:
       return <div>Breakdown</div>;
     case DataOptions.Records:
@@ -31,12 +34,7 @@ const DataContainer = () => {
   const { data } = useData()!;
   const { option } = useDataOption()!;
 
-  return (
-    <Container>
-      {<RawDataDisplay data={data} />}
-      {displayVisualization(option, data)}
-    </Container>
-  );
+  return <Container>{displayVisualization(option, data)}</Container>;
 };
 
 export default DataContainer;
