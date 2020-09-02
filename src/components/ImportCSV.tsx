@@ -1,11 +1,24 @@
 import React from "react";
-import Papa from "papaparse";
+import Papa, { ParseResult } from "papaparse";
 import styled from "styled-components";
 import { Sizes } from "./baseComponents/baseComponentsTypes";
 import StyledButton from "./baseComponents/StyledButton";
 import { useDisplay, ShowChoices } from "./context/displayContext";
 import { useData } from "./context/dataContext";
 import { useBodyweightData } from "./context/bodyweightDataContext";
+
+const mutateData = (csv: ParseResult<Array<string>>) => {
+  const rows: Array<Array<string>> = [...csv.data];
+
+  let tableNames: Array<string> = rows.splice(0, 1)[0];
+  return rows.map((data) => {
+    let result: any = {};
+    tableNames.forEach((name, index) => {
+      result[name] = data[index];
+    });
+    return result;
+  });
+};
 
 type DivProps = {
   active?: boolean;
@@ -75,14 +88,20 @@ const ImportCSV = () => {
           if (bodyweightFiles!.length > 0) {
             Papa.parse(bodyweightFiles![0], {
               header: false,
-              complete: (res) => setBodyweightData(res),
+              complete: (res: ParseResult<Array<string>>) => {
+                console.log(mutateData(res));
+                setBodyweightData(res);
+              },
               error: (err) => setBodyweightData(err),
             });
           }
 
           Papa.parse(exercisesFiles![0], {
             header: false,
-            complete: (res) => setData(res),
+            complete: (res: ParseResult<Array<string>>) => {
+              console.log(mutateData(res));
+              setData(res);
+            },
             error: (err) => setData(err),
           });
 

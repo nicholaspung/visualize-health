@@ -32,16 +32,18 @@ enum TimeOptions {
 
 const BodyweightTrends = () => {
   const { bodyweightData } = useBodyweightData()!;
+  console.log(bodyweightData);
 
   const [timeDomain, setTimeDomain] = React.useState(
     d3.extent(bodyweightData, (d: any) => d.data)
   );
 
-  const lineGenerator = d3.line();
-  const data = d3.extent(bodyweightData, (d: any) => d.data);
+  const lineGenerator = d3.line<any>();
+  const data = d3.extent(bodyweightData.data, (d: any) => d);
+  console.log(data);
   const [filter, setFilter] = React.useState(FilterOptions.Bodyweight);
   const [time, setTime] = React.useState(TimeOptions.OneMonth);
-  const [average, setAverage] = React.useState(lineGenerator(data));
+  const [average, setAverage] = React.useState(undefined);
   const xScale = d3.scaleTime().range([margin.left, width - margin.right]);
   const yScale = d3.scaleTime().range([height - margin.bottom, margin.top]);
 
