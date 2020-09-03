@@ -89,8 +89,7 @@ const ImportCSV = () => {
             Papa.parse(bodyweightFiles![0], {
               header: false,
               complete: (res: ParseResult<Array<string>>) => {
-                console.log(mutateData(res));
-                setBodyweightData(res);
+                setBodyweightData(mutateData(res));
               },
               error: (err) => setBodyweightData(err),
             });
@@ -99,8 +98,7 @@ const ImportCSV = () => {
           Papa.parse(exercisesFiles![0], {
             header: false,
             complete: (res: ParseResult<Array<string>>) => {
-              console.log(mutateData(res));
-              setData(res);
+              setData(mutateData(res));
             },
             error: (err) => setData(err),
           });

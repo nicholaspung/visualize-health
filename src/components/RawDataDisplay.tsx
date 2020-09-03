@@ -87,16 +87,16 @@ const RawDataDisplay = (props: RawDataDisplayProps) => {
     <Table active={option === DataOptions.RawData}>
       <thead>
         <tr>
-          {props.data.data[0].map((fields: string) => (
+          {Object.keys(props.data[0]).map((fields: string) => (
             <th key={fields}>{fields}</th>
           ))}
         </tr>
       </thead>
       <tbody>
-        {props.data.data.slice(1).map((row: any, idx: number) => (
-          <tr key={row.join(`${idx}`)}>
-            {row.map((fields: string, idx: number) => (
-              <td key={`${fields}${idx}`}>{fields}</td>
+        {props.data.map((row: any, idx: number) => (
+          <tr key={`${row.Date}${idx}`}>
+            {Object.keys(row).map((fields: string, idx: number) => (
+              <td key={`${fields}${idx}`}>{row[fields]}</td>
             ))}
           </tr>
         ))}

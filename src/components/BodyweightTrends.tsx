@@ -30,22 +30,32 @@ enum TimeOptions {
   All = "All",
 }
 
+type BodyweightData = {
+  Date: string;
+  Measurement: string;
+  Time: string;
+  Unit: string;
+  Value: string;
+};
+
 const BodyweightTrends = () => {
   const { bodyweightData } = useBodyweightData()!;
-  console.log(bodyweightData);
-
-  const [timeDomain, setTimeDomain] = React.useState(
-    d3.extent(bodyweightData, (d: any) => d.data)
-  );
-
-  const lineGenerator = d3.line<any>();
-  const data = d3.extent(bodyweightData.data, (d: any) => d);
-  console.log(data);
   const [filter, setFilter] = React.useState(FilterOptions.Bodyweight);
   const [time, setTime] = React.useState(TimeOptions.OneMonth);
-  const [average, setAverage] = React.useState(undefined);
+
+  const lineGenerator = d3.line<any>();
   const xScale = d3.scaleTime().range([margin.left, width - margin.right]);
   const yScale = d3.scaleTime().range([height - margin.bottom, margin.top]);
+
+  const weightDomain = d3.extent(
+    bodyweightData,
+    (d: BodyweightData) => d.Value
+  );
+  const timeMin = d3.min(bodyweightData, (d: BodyweightData) => d.Date);
+  const timeMax = d3.max(bodyweightData, (d: BodyweightData) => d.Date);
+
+  xScale.domain(weightDomain);
+  yScale.domain([timeMin, timeMax]);
 
   const xAxis = d3
     .axisBottom(xScale)
