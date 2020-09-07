@@ -76,32 +76,51 @@ const Table = styled.table<TableProps>`
   }
 `;
 
+const LoadDiv = styled.div`
+  text-align: center;
+  cursor: pointer;
+  padding: 1rem;
+  margin: 1rem 0;
+
+  &:hover {
+    background-color: lightgrey;
+  }
+`;
+
 type RawDataDisplayProps = {
   data: any;
 };
 
 const RawDataDisplay = (props: RawDataDisplayProps) => {
   const { option } = useDataOption()!;
+  const [virtualizedRange, setVirtualizedRange] = React.useState<number>(100);
 
   return (
-    <Table active={option === DataOptions.RawData}>
-      <thead>
-        <tr>
-          {Object.keys(props.data[0]).map((fields: string) => (
-            <th key={fields}>{fields}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {props.data.map((row: any, idx: number) => (
-          <tr key={`${row.Date}${idx}`}>
-            {Object.keys(row).map((fields: string, idx: number) => (
-              <td key={`${fields}${idx}`}>{row[fields]}</td>
+    <>
+      <Table active={option === DataOptions.RawData}>
+        <thead>
+          <tr>
+            {Object.keys(props.data[0]).map((fields: string) => (
+              <th key={fields}>{fields}</th>
             ))}
           </tr>
-        ))}
-      </tbody>
-    </Table>
+        </thead>
+        <tbody>
+          {props.data
+            .slice(0, virtualizedRange)
+            .map((row: any, idx: number) => (
+              <tr key={`${row.Date}${idx}`}>
+                {Object.keys(row).map((fields: string, idx: number) => (
+                  <td key={`${fields}${idx}`}>{row[fields]}</td>
+                ))}
+              </tr>
+            ))}
+        </tbody>
+      </Table>
+      <LoadDiv onClick={() => setVirtualizedRange(virtualizedRange + 100)}>
+        Load More...
+      </LoadDiv>
+    </>
   );
 };
 

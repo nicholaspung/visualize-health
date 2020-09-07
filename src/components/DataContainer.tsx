@@ -4,6 +4,7 @@ import { useData } from "./context/dataContext";
 import { useDataOption, DataOptions } from "./context/dataOptionContext";
 import RawDataDisplay from "./RawDataDisplay";
 import BodyweightTrends from "./BodyweightTrends";
+import WorkoutDistribution from "./WorkoutDistribution";
 
 const Container = styled.div`
   flex: 1 0 65%;
@@ -24,7 +25,7 @@ const displayVisualization = (option: DataOptions, data: any) => {
     case DataOptions.Records:
       return <div>Records</div>;
     case DataOptions.WorkoutDistribution:
-      return <div>Workout Distribution</div>;
+      return <WorkoutDistribution data={data} />;
     default:
       return <div>Recommendations</div>;
   }

@@ -2,34 +2,12 @@ import React from "react";
 import * as d3 from "d3";
 import { useBodyweightData } from "./context/bodyweightDataContext";
 
-const width = 650;
+const width = 775;
 const height = 350;
 const margin = { top: 20, right: 5, bottom: 20, left: 35 };
-const red = "#eb6a5b";
 const blue = "#52b6ca";
 
 /*
-enum FilterOptions {
-  Bodyweight = "Bodyweight",
-  BodyFat = "Body Fat",
-  Neck = "Neck",
-  Waist = "Waist",
-  UpperArmRight = "Upper Arm (Right)",
-  UpperArmLeft = "Upper Arm (Left)",
-  ThighRight = "Thigh (Right)",
-  ThighLeft = "Thigh (Left)",
-  Calories = "Calories",
-  Steps = "Steps",
-}
-
-enum TimeOptions {
-  OneMonth = "1m",
-  ThreeMonths = "3m",
-  SixMonths = "6m",
-  OneYear = "1y",
-  All = "All",
-}
-
 type BodyweightData = {
   Date: string;
   Measurement: string;
@@ -107,18 +85,18 @@ const BodyweightTrends = () => {
       return false;
     });
 
+  const dataDomain = d3.mean(filterData, (d) => Number(d.Value));
+  const dataMaxDomain = d3.max(filterData, (d) => Number(d.Value));
+  const dataMinDomain = d3.min(filterData, (d) => Number(d.Value));
+  const timeDomain = d3.extent(filterData, transformToDate);
+
+  xScale.domain(timeDomain);
+  yScale.domain([
+    dataMinDomain - dataDomain * 0.05,
+    dataMaxDomain + dataDomain * 0.05,
+  ]);
+
   React.useEffect(() => {
-    const dataDomain = d3.mean(filterData, (d) => Number(d.Value));
-    const dataMaxDomain = d3.max(filterData, (d) => Number(d.Value));
-    const dataMinDomain = d3.min(filterData, (d) => Number(d.Value));
-    const timeDomain = d3.extent(filterData, transformToDate);
-
-    xScale.domain(timeDomain);
-    yScale.domain([
-      dataMinDomain - dataDomain * 0.05,
-      dataMaxDomain + dataDomain * 0.05,
-    ]);
-
     d3.select(xAxis.current).call(
       d3.axisBottom(xScale).tickFormat(d3.timeFormat("%b %d, %y"))
     );
@@ -150,7 +128,22 @@ const BodyweightTrends = () => {
       </div>
       {filterData.length > 0 ? (
         <svg width={width} height={height}>
-          <path d={line} fill="none" stroke={red} strokeWidth="2" />
+          <path d={line} fill="none" stroke={blue} strokeWidth="2" />
+          <g>
+            {filterData.map((d, i) => {
+              return (
+                <circle
+                  key={i}
+                  cx={xScale(transformToDate(d))}
+                  cy={yScale(Number(d.Value))}
+                  r={2}
+                  style={{
+                    stroke: "black",
+                  }}
+                />
+              );
+            })}
+          </g>
           <g>
             <g
               ref={xAxis}
