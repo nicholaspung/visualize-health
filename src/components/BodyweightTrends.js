@@ -76,9 +76,38 @@ const BodyweightTrends = () => {
   const xAxis = React.useRef();
   const yAxis = React.useRef();
 
-  React.useEffect(() => {
-    const filterData = bodyweightData.filter((d) => d.Measurement === filter);
+  const filterData = bodyweightData
+    .filter((d) => d.Measurement === filter)
+    .filter((d) => {
+      let today = new Date();
+      if (time === TimeOptions.All) {
+        return true;
+      } else {
+        let value;
+        if (time === TimeOptions.OneMonth) {
+          value = 1;
+        } else if (time === TimeOptions.ThreeMonths) {
+          value = 3;
+        } else if (time === TimeOptions.SixMonths) {
+          value = 6;
+        } else {
+          value = 12;
+        }
+        if (
+          transformToDate(d) >
+          new Date(
+            today.getFullYear(),
+            today.getMonth() - value,
+            today.getDay()
+          )
+        ) {
+          return true;
+        }
+      }
+      return false;
+    });
 
+  React.useEffect(() => {
     const dataDomain = d3.mean(filterData, (d) => Number(d.Value));
     const dataMaxDomain = d3.max(filterData, (d) => Number(d.Value));
     const dataMinDomain = d3.min(filterData, (d) => Number(d.Value));
@@ -103,21 +132,23 @@ const BodyweightTrends = () => {
 
   return (
     <>
-      <select value={filter} onChange={(e) => setFilter(e.target.value)}>
-        {Object.keys(FilterOptions).map((name) => (
-          <option key={name} value={FilterOptions[name]}>
-            {FilterOptions[name]}
-          </option>
-        ))}
-      </select>
-      <select value={time} onChange={(e) => setTime(e.target.value)}>
-        {Object.keys(TimeOptions).map((name) => (
-          <option key={name} value={TimeOptions[name]}>
-            {TimeOptions[name]}
-          </option>
-        ))}
-      </select>{" "}
-      {bodyweightData.filter((d) => d.Measurement === filter).length > 0 ? (
+      <div>
+        <select value={filter} onChange={(e) => setFilter(e.target.value)}>
+          {Object.keys(FilterOptions).map((name) => (
+            <option key={name} value={FilterOptions[name]}>
+              {FilterOptions[name]}
+            </option>
+          ))}
+        </select>
+        <select value={time} onChange={(e) => setTime(e.target.value)}>
+          {Object.keys(TimeOptions).map((name) => (
+            <option key={name} value={TimeOptions[name]}>
+              {TimeOptions[name]}
+            </option>
+          ))}
+        </select>{" "}
+      </div>
+      {filterData.length > 0 ? (
         <svg width={width} height={height}>
           <path d={line} fill="none" stroke={red} strokeWidth="2" />
           <g>
