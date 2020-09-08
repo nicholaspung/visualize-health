@@ -106,7 +106,7 @@ const BodyweightTrends = () => {
     lineGenerator.y((d) => yScale(Number(d.Value)));
 
     setLine(lineGenerator(filterData));
-  }, [filter, time]);
+  }, [filter, time, filterData, lineGenerator, xScale, yScale]);
 
   return (
     <>
