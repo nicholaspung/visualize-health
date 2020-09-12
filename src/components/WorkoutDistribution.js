@@ -23,6 +23,10 @@ const Group = styled.g`
   }
 `;
 
+const Div = styled.div`
+  display: flex;
+`;
+
 /*
 type WorkoutData = {
   Category: string;
@@ -48,7 +52,7 @@ const WorkoutDistribution = ({ data }) => {
   const data_ready = pie(
     d3.entries(groupedCategories.map((category) => category[1].length))
   );
-  console.log(data_ready);
+  console.log(groupedCategories);
 
   const totalNumberOfSets = groupedCategories.reduce(
     (acc, curr) => acc + curr[1].length,
@@ -68,26 +72,36 @@ const WorkoutDistribution = ({ data }) => {
   });
 
   return (
-    <svg width={width} height={height}>
-      <g transform={`translate(${width / 2}, ${height / 2})`}>
-        {slices.map((d, i) => (
-          <Group key={i}>
-            <path d={d.path} fill={d.fill} />
-            <text
-              className="text-arc"
-              transform={`translate(${arcGenerator.centroid({
-                startAngle: d.d.startAngle,
-                endAngle: d.d.endAngle,
-                innerRadius: 0,
-                outerRadius: radius,
-              })})`}
-            >
-              {Math.round((d.d.value / totalNumberOfSets) * 100)}%
-            </text>
-          </Group>
+    <Div>
+      <svg width={width} height={height}>
+        <g transform={`translate(${width / 2}, ${height / 2})`}>
+          {slices.map((d, i) => (
+            <Group key={i}>
+              <path d={d.path} fill={d.fill} />
+              <text
+                className="text-arc"
+                transform={`translate(${arcGenerator.centroid({
+                  startAngle: d.d.startAngle - 2 * Math.PI * 0.01,
+                  endAngle: d.d.endAngle - 2 * Math.PI * 0.01,
+                  innerRadius: 0,
+                  outerRadius: radius,
+                })})`}
+              >
+                {Math.round((d.d.value / totalNumberOfSets) * 100)}%
+              </text>
+            </Group>
+          ))}
+        </g>
+      </svg>
+      <div>
+        <p>Total # of Sets: {totalNumberOfSets}</p>
+        {groupedCategories.map((d) => (
+          <p key={d[0]}>
+            # of Sets for {d[0]}: {d[1].length}
+          </p>
         ))}
-      </g>
-    </svg>
+      </div>
+    </Div>
   );
 };
 
